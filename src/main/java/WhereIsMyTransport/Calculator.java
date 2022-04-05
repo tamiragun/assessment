@@ -16,21 +16,21 @@ public class Calculator {
         return day.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
     }
 
-    public String calculate_routes(String input_score, String input_routes) {
+    public String calculate_routes(String inputScore, String inputRoutes) {
         // Extract the score from the string
-        String score_string = input_score.substring(input_score.length() - 2);
+        String scoreString = inputScore.substring(inputScore.length() - 2);
         // Extract the date from the string
-        String inputDate = input_score.substring(0,10);
+        String inputDate = inputScore.substring(0,10);
         // Extract the day of the week from the date, courtesy of https://www.baeldung.com/java-get-day-of-week
         String dayOfWeek = this.getDayString(inputDate);
 
 
         String output = "";
         // Discard scores 0 and 10
-        if (score_string.equals("10") || score_string.equals(" 0")) {
+        if (scoreString.equals("10") || scoreString.equals(" 0")) {
             output = "Insufficient valid scores provided";
         } else {
-            output = "Pantitlán - La Paz "+ dayOfWeek + score_string;
+            output = "Pantitlán - La Paz "+ dayOfWeek + scoreString;
         }
         return output;
     }
