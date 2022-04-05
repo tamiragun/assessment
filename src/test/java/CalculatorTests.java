@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 
 public class CalculatorTests {
+
     private final Calculator calculator = new Calculator();
 
     @Test
@@ -53,4 +54,23 @@ public class CalculatorTests {
         String output = "Pantitlán - La Paz Wednesday 2.00";
         assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
     }
+
+    @Test
+    @DisplayName("Single route on single weekday with multiple scores returns the average score for that route on that weekday")
+    void single_route_single_weekday_multiple_score_values() {
+        String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 6";
+        String inputRoutes = "";
+        String output = "Pantitlán - La Paz Thursday 5.00";
+        assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
+    }
+
+    @Test
+    @DisplayName("Single route on single weekday with multiple scores returns the average score for that route on that weekday")
+    void single_route_single_weekday_multiple_score_values_b() {
+        String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 6,route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10";
+        String inputRoutes = "";
+        String output = "Pantitlán - La Paz Thursday 5.00";
+        assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
+    }
+
 }
