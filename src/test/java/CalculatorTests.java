@@ -14,7 +14,7 @@ public class CalculatorTests {
     void single_route_single_weekday_single_score_value_2() {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 2";
         String inputRoutes = "";
-        String output = "Pantitlán - La Paz Thursday 2";
+        String output = "Pantitlán - La Paz Thursday 2.00";
         assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
     }
 
@@ -23,7 +23,7 @@ public class CalculatorTests {
     void single_route_single_weekday_single_score_value_3() {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 3";
         String inputRoutes = "";
-        String output = "Pantitlán - La Paz Thursday 3";
+        String output = "Pantitlán - La Paz Thursday 3.00";
         assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
     }
 
@@ -50,7 +50,7 @@ public class CalculatorTests {
     void single_route_single_weekday_single_score_value_Wednesday() {
         String inputScore = "2021/11/17;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 2";
         String inputRoutes = "";
-        String output = "Pantitlán - La Paz Wednesday 2";
+        String output = "Pantitlán - La Paz Wednesday 2.00";
         assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
     }
 }
