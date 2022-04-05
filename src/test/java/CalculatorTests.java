@@ -73,4 +73,13 @@ public class CalculatorTests {
         assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
     }
 
+    @Test
+    @DisplayName("Single route on single weekday with only invalid scores returns insufficient scores msg")
+    void single_route_single_weekday_multiple_invalid_score_values() {
+        String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10";
+        String inputRoutes = "";
+        String output = "Insufficient valid scores provided";
+        assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
+    }
+
 }
