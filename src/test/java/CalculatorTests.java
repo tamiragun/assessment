@@ -99,4 +99,13 @@ public class CalculatorTests {
         String output = "Pantitlán - La Paz Wednesday 6.50\nPantitlán - La Paz Thursday 5.00\n";
         assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
     }
+
+    @Test
+    @DisplayName("Single route on multiple weekdays with multiple valid and invalid scores returns the average score for that route on each weekday")
+    void single_route_multiple_weekday_multiple_valid_and_invalid_score_values() {
+        String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/10;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/10;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 9,2021/11/04;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 6,2021/11/16;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0,2021/11/15;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/14;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0";
+        String inputRoutes = "";
+        String output = "Pantitlán - La Paz Monday 4.00\nPantitlán - La Paz Wednesday 6.50\nPantitlán - La Paz Thursday 5.00\n";
+        assertEquals(output, calculator.calculate_routes(inputScore, inputRoutes));
+    }
 }
