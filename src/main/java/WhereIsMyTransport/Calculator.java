@@ -19,80 +19,117 @@ public class Calculator {
     }
 
     public String calculate_routes(String inputScore, String inputRoutes) {
-        // Create a synchronised map for the weekdays
-        Map<String, ArrayList> weekDays = Collections.synchronizedMap(new LinkedHashMap<String, ArrayList>(7));
-        weekDays.put("Monday", new ArrayList<Double>());
-        weekDays.put("Tuesday", new ArrayList<Double>());
-        weekDays.put("Wednesday", new ArrayList<Double>());
-        weekDays.put("Thursday", new ArrayList<Double>());
-        weekDays.put("Friday", new ArrayList<Double>());
-        weekDays.put("Saturday", new ArrayList<Double>());
-        weekDays.put("Sunday", new ArrayList<Double>());
+        // Create a map of the routes and their names
+        Hashtable<String,String> routesAndNames = new Hashtable<>();
+        // Create a map of each route and the weekdays
+        Map<String,Map<String, ArrayList<Double>>> routesAndWeekdays = Collections.synchronizedMap(new LinkedHashMap<String,Map<String, ArrayList<Double>>>());
+        // Split the input routes
+        String[] inputRouteList = inputRoutes.split(",");
+        // Add each route info to the hashtable
+        for (int i = 0; i< inputRouteList.length; i++) {
+            String[] routeElements = inputRouteList[i].split(";");
+            String routeName = routeElements[1];
+            String[] routeIdElements = routeElements[0].split(" ");
+            String RouteId = routeIdElements[0];
+            routesAndNames.put(RouteId, routeName);
 
-        // Split the input scores
+            // Create a synchronised map for the weekdays
+            Map<String, ArrayList<Double>> weekDays = Collections.synchronizedMap(new LinkedHashMap<String, ArrayList<Double>>(7));
+            routesAndWeekdays.put(RouteId, weekDays);
+            routesAndWeekdays.get(RouteId).put("Monday", new ArrayList<Double>());
+            routesAndWeekdays.get(RouteId).put("Tuesday", new ArrayList<Double>());
+            routesAndWeekdays.get(RouteId).put("Wednesday", new ArrayList<Double>());
+            routesAndWeekdays.get(RouteId).put("Thursday", new ArrayList<Double>());
+            routesAndWeekdays.get(RouteId).put("Friday", new ArrayList<Double>());
+            routesAndWeekdays.get(RouteId).put("Saturday", new ArrayList<Double>());
+            routesAndWeekdays.get(RouteId).put("Sunday", new ArrayList<Double>());
+        }
+
+       // Split the input scores
         String[] inputScores = inputScore.split(",", 0);
+
         // Initiate the output string
         String output = "";
 
         // Iterate over the scores
         for( int i = 0; i < inputScores.length; i++) {
-            // Extract the date from the string
-            String inputDate = inputScores[i].substring(0,10);
+            // Split the score into date, rote, and score
+            String[] inputScoreArray = inputScores[i].split(";");
+            // Extract the date
+            String inputDate = inputScoreArray[0];
             // Extract the day of the week from the date, courtesy of https://www.baeldung.com/java-get-day-of-week
             String dayOfWeek = this.getDayString(inputDate);
+            // Extract the route
+            String[] routeScoreArray = inputScoreArray[1].split(" ");
+            String route = routeScoreArray[0];
+            String routeName = routesAndNames.get(route);
             // Extract the score from the string
-            String scoreString = inputScores[i].substring(inputScores[i].length() - 2);
+            String scoreString = routeScoreArray[1];
             // Convert it to double
             Double scoreDouble = Double.parseDouble(scoreString);
             // Discard scores 0 and 10 and add others to the sum
             if (scoreDouble != 10.0 && scoreDouble != 0.0) {
                 switch (dayOfWeek) {
-                    case "Monday":   weekDays.get("Monday").add(scoreDouble);
+                    case "Monday":   routesAndWeekdays.get(route).get("Monday").add(scoreDouble);
                         break;
-                    case "Tuesday":   weekDays.get("Tuesday").add(scoreDouble);
+                    case "Tuesday":   routesAndWeekdays.get(route).get("Tuesday").add(scoreDouble);
                         break;
-                    case "Wednesday":   weekDays.get("Wednesday").add(scoreDouble);
+                    case "Wednesday":   routesAndWeekdays.get(route).get("Wednesday").add(scoreDouble);
                         break;
-                    case "Thursday":   weekDays.get("Thursday").add(scoreDouble);
+                    case "Thursday":   routesAndWeekdays.get(route).get("Thursday").add(scoreDouble);
                         break;
-                    case "Friday":   weekDays.get("Friday").add(scoreDouble);
+                    case "Friday":   routesAndWeekdays.get(route).get("Friday").add(scoreDouble);
                         break;
-                    case "Saturday":   weekDays.get("Saturday").add(scoreDouble);
+                    case "Saturday":   routesAndWeekdays.get(route).get("Saturday").add(scoreDouble);
                         break;
-                    default:            weekDays.get("Sunday").add(scoreDouble);
+                    default:            routesAndWeekdays.get(route).get("Sunday").add(scoreDouble);
                                         break;
                 }
             }
 
+
+
         }
 
-        // Calculate the average score for each weekday
+        // Calculate the average score for each weekday on each route
 
-        Set<String> setOfWeekdays = weekDays.keySet();
-        for(String key : setOfWeekdays) {
-            Double sum = 0.0;
-            int validScores = 0;
-            Double average = 0.0;
+        // Iterate over each route
+        Set<String> setOfRoutes = routesAndWeekdays.keySet();
+        for(String route : setOfRoutes) {
+            // Iterate over each weekday
+            Set<String> setOfWeekdays = routesAndWeekdays.get(route).keySet();
 
-            // If the score is valid, add to the sum for this weekday
-            for (int i = 0; i < weekDays.get(key).size(); i++) {
-                Double score = Double.parseDouble(weekDays.get(key).get(i).toString());
-                sum += score;
-                validScores++;
-            }
-            // Calculate the average of all valid scores
-            if (validScores > 0) {
-                average = sum/validScores;
-            }
+            //String weekDayAverage = "";
 
-            // Ensure it is formatted to two decimal points
-            DecimalFormat df = new DecimalFormat("#.00", DecimalFormatSymbols.getInstance(Locale.US));
-            // Formulate the output
-            if (average != 0) {
-                output += "Pantitlán - La Paz " + key + " " + df.format(average)+"\n";
-            }
+            for(String weekday : setOfWeekdays) {
+                Double sum = 0.0;
+                int validScores = 0;
+                Double average = 0.0;
+                // If the score is valid, add to the sum for this weekday
+                for (int j = 0; j < routesAndWeekdays.get(route).get(weekday).size(); j++) {
+                    Double score = Double.parseDouble(routesAndWeekdays.get(route).get(weekday).get(j).toString());
+                    sum += score;
+                    validScores++;
+                }
+                // Calculate the average of all valid scores
+                if (validScores > 0) {
+                    average = sum/validScores;
+                }
 
-        };
+                // Ensure it is formatted to two decimal points
+                DecimalFormat df = new DecimalFormat("#.00", DecimalFormatSymbols.getInstance(Locale.US));
+                String formattedAverage = df.format(average);
+                // Formulate the output
+                if (average != 0) {
+                    output+= routesAndNames.get(route) + " " + weekday + " " +formattedAverage+"\n";
+                };
+
+            };
+        }
+
+
+
+
         System.out.println(output);
         return output;
     }
