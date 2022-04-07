@@ -29,7 +29,7 @@ public class CalculatorTests {
     }
 
     @Test
-    @DisplayName("Single route on single weekday with single score of 10 returns insufficient scores msg")
+    @DisplayName("Single route on single weekday with single score of 10 returns an empty string")
     void single_route_single_weekday_single_score_value_10() {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10";
         String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz";
@@ -38,7 +38,7 @@ public class CalculatorTests {
     }
 
     @Test
-    @DisplayName("Single route on single weekday with single score of 0 returns insufficient scores msg")
+    @DisplayName("Single route on single weekday with single score of 0 returns an empty string")
     void single_route_single_weekday_single_score_value_0() {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0";
         String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz";
@@ -83,7 +83,7 @@ public class CalculatorTests {
     }
 
     @Test
-    @DisplayName("Single route on single weekday with only invalid scores returns insufficient scores msg")
+    @DisplayName("Single route on single weekday with only invalid scores returns an empty string")
     void single_route_single_weekday_multiple_invalid_score_values() {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10";
         String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz";
@@ -142,6 +142,15 @@ public class CalculatorTests {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/04;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 6,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/10;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 3,2021/11/03;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 6,2021/11/17;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 0";
         String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz,route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 METRO;El Rosario - Martín Carrera";
         String output = "Pantitlán - La Paz Thursday 5.00\nEl Rosario - Martín Carrera Wednesday 4.50\n";
+        assertEquals(output, calculator.calculateRoutes(inputScore, inputRoutes));
+    }
+
+    @Test
+    @DisplayName("Multiple routes on multiple weekdays with only invalid scores returns an empty string")
+    void multiple_routes_multiple_weekday_multiple_invalid_score_values() {
+        String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0,2021/11/04;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/10;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 0,2021/11/03;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 10,2021/11/17;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 0";
+        String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz,route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 METRO;El Rosario - Martín Carrera";
+        String output = "";
         assertEquals(output, calculator.calculateRoutes(inputScore, inputRoutes));
     }
 }
