@@ -42,7 +42,7 @@ public class Main {
             }
 
             // Calculate the averages
-            String averageScores = calculator.calculateRoutes(scoresString,referenceDataString);
+            String averageScores = calculator.calculateTransportFeedback(scoresString,referenceDataString);
 
             // Write the averages to the file
             results = new Formatter("results.txt");

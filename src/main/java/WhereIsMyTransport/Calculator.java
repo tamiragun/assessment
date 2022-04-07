@@ -1,7 +1,5 @@
 package WhereIsMyTransport;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,16 +9,9 @@ import java.util.*;
 
 public class Calculator {
 
-    public static String getDayString(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
-        LocalDate convertedDate = LocalDate.parse(date, formatter);
-        DayOfWeek day = convertedDate.getDayOfWeek();
-        return day.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-    }
-
-    public String calculateRoutes(String inputScore, String inputRoutes) {
+    public String calculateTransportFeedback(String inputScore, String inputRoutes) {
         // Create route map with the input  routes
-        RouteMapping routeMap = new RouteMapping(inputRoutes);
+        RouteMap routeMap = new RouteMap(inputRoutes);
         // Iterate over the scores
         String[] scores = inputScore.split(",");
 
