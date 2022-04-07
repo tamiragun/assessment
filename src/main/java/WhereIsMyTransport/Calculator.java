@@ -18,7 +18,7 @@ public class Calculator {
         return day.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
     }
 
-    public String calculate_routes(String inputScore, String inputRoutes) {
+    public String calculateRoutes(String inputScore, String inputRoutes) {
         // Create a map of the routes and their names
         Hashtable<String,String> routesAndNames = new Hashtable<>();
         // Create a map of each route and the weekdays

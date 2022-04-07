@@ -42,7 +42,7 @@ public class Main {
             }
 
             // Calculate the averages
-            String averageScores = calculator.calculate_routes("2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/11;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 3,","route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz,route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 METRO;El Rosario - Martín Carrera,");
+            String averageScores = calculator.calculateRoutes("2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/11;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 3,","route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz,route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 METRO;El Rosario - Martín Carrera,");
 
             // Write the averages to the file
             results = new Formatter("results.txt");
