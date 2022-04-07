@@ -20,7 +20,8 @@ public class Calculator {
 
     public String calculateRoutes(String inputScore, String inputRoutes) {
         // Create a map of the routes and their names
-        Hashtable<String,String> routesAndNames = new Hashtable<>();
+        //Hashtable<String,String> routesAndNames = new Hashtable<>();
+        RouteMapping routeMap = new RouteMapping(inputRoutes);
         // Create a map of each route and the weekdays
         Map<String,Map<String, ArrayList<Double>>> routesAndWeekdays = Collections.synchronizedMap(new LinkedHashMap<String,Map<String, ArrayList<Double>>>());
         // Split the input routes
@@ -28,10 +29,8 @@ public class Calculator {
         // Add each route info to the hashtable
         for (int i = 0; i< inputRouteList.length; i++) {
             String[] routeElements = inputRouteList[i].split(";");
-            String routeName = routeElements[1];
             String[] routeIdElements = routeElements[0].split(" ");
             String RouteId = routeIdElements[0];
-            routesAndNames.put(RouteId, routeName);
 
             // Create a synchronised map for the weekdays
             Map<String, ArrayList<Double>> weekDays = Collections.synchronizedMap(new LinkedHashMap<String, ArrayList<Double>>(7));
@@ -62,7 +61,7 @@ public class Calculator {
             // Extract the route
             String[] routeScoreArray = inputScoreArray[1].split(" ");
             String route = routeScoreArray[0];
-            String routeName = routesAndNames.get(route);
+            String routeName = routeMap.getRoutesAndNames().get(route);
             // Extract the score from the string
             String scoreString = routeScoreArray[1];
             // Convert it to double
@@ -121,7 +120,7 @@ public class Calculator {
                 String formattedAverage = df.format(average);
                 // Formulate the output
                 if (average != 0) {
-                    output+= routesAndNames.get(route) + " " + weekday + " " +formattedAverage+"\n";
+                    output+= routeMap.getRoutesAndNames().get(route) + " " + weekday + " " +formattedAverage+"\n";
                 };
 
             };
