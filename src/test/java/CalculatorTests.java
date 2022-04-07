@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import WhereIsMyTransport.Calculator;
-import org.junit.Ignore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -106,7 +105,7 @@ public class CalculatorTests {
     void single_route_multiple_weekday_multiple_valid_and_invalid_score_values() {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/10;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/10;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 9,2021/11/04;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 6,2021/11/16;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0,2021/11/15;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 4,2021/11/14;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0";
         String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz";
-        String output = "Pantitlán - La Paz Monday 4.00\nPantitlán - La Paz Wednesday 6.50\nPantitlán - La Paz Thursday 5.00\n";
+        String output = "Pantitlán - La Paz Wednesday 6.50\nPantitlán - La Paz Thursday 5.00\nPantitlán - La Paz Monday 4.00\n";
         assertEquals(output, calculator.calculateRoutes(inputScore, inputRoutes));
     }
 
@@ -152,6 +151,15 @@ public class CalculatorTests {
         String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 0,2021/11/04;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/11;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 10,2021/11/10;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 0,2021/11/03;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 10,2021/11/17;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 0";
         String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz,route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 METRO;El Rosario - Martín Carrera";
         String output = "";
+        assertEquals(output, calculator.calculateRoutes(inputScore, inputRoutes));
+    }
+
+    @Test
+    @DisplayName("Multiple routes on multiple weekdays per route with single valid scores returns the score for each route on each weekday in descending order")
+    void multiple_routes_multiple_weekdays_per_route_single_score_values() {
+        String inputScore = "2021/11/18;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 8,2021/11/17;route_4ac7ab76-d938-4b27-93a8-f1b678007dfe 7,2021/11/10;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 4,2021/11/08;route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 2";
+        String inputRoutes = "route_4ac7ab76-d938-4b27-93a8-f1b678007dfe METRO;Pantitlán - La Paz,route_66d0f0b7-da84-4e1a-b37d-7122248ff9f9 METRO;El Rosario - Martín Carrera";
+        String output = "Pantitlán - La Paz Thursday 8.00\nPantitlán - La Paz Wednesday 7.00\nEl Rosario - Martín Carrera Wednesday 4.00\nEl Rosario - Martín Carrera Monday 2.00\n";
         assertEquals(output, calculator.calculateRoutes(inputScore, inputRoutes));
     }
 }
