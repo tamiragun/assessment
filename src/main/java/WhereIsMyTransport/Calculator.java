@@ -127,9 +127,6 @@ public class Calculator {
             };
         }
 
-
-
-
         System.out.println(output);
         return output;
     }
